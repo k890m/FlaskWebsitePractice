@@ -8,39 +8,37 @@
   </head>
   <body>
     <nav class="navbar">
-
       <div>
-       
-        <a id="logout" href="/logout">Logout</a>
+        {% if user.is_authenticated %}
         <a id="home" href="/">Home</a>
-      
+        <a id="logout" href="/logout">Logout</a>
+        {% else %}
+
         <a id="login" href="/login">Login</a>
         <a id="signUp" href="/sign-up">Sign Up</a>
-       
+        {% endif %}
       </div>
     </nav>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-        {% if category == 'error' %}
-        <div class="alert-error" role="alert">
-            {{message}}
-            <button type="button" class ="close">Okay</button>
-        </div>
-        {% else %}
-        <div class="alert-success" role="alert">
-            {{message}}
-            <button type="button" class ="close">Okay</button>
-        </div>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-    {% endwith %}
-
-    <div>
-        {% block content %}
-        {% endblock %}
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category ==
+    'error' %}
+    <div class="alert-error" role="alert">
+      {{message}}
+      <button type="button" class="close">Okay</button>
     </div>
+    {% else %}
+    <div class="alert-success" role="alert">
+      {{message}}
+      <button type="button" class="close">Okay</button>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+
+    <div>{% block content %} {% endblock %}</div>
+
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='index.js') }}"
+    ></script>
   </body>
 </html>
